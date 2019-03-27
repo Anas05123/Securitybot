@@ -62,7 +62,7 @@ client.on('message', message => {
 client.on("message", (message) => {
     if (message.author.bot) return;
     if (!prefix) {
-        var prefix = "-";
+        var prefix = "$";
     }
     if (!message.content.startsWith(prefix)) return;
     var args = message.content.split(" ")
