@@ -156,8 +156,7 @@ if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply(' لي
                message.reply("تم تقفيل الشات :white_check_mark: ")
            });
              }
-//™¦༺♚ƙἶղց|MaS♚༺¦™#7105
-if (message.content === ".unmutechannel") {
+    if (message.content.startsWith(prefix + "unmutechannel")) {
     if(!message.channel.guild) return message.reply(' This command only for servers');
  
 if(!message.member.hasPermission('MANAGE_MESSAGES')) return message.reply('ليس لديك صلاحيات');
