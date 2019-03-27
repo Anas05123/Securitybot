@@ -5,10 +5,10 @@ client.on('ready',  () => {
   console.log('ImReady');
 });
 
-client.on('message', message => { // هاذا للبرودكسات
-        var prefix = '§'; // هنا تقدر تغير البرفكس
+client.on('message', message => { 
+        var prefix = '$'; 
 	var command = message.content.split(" ")[0];
-	if(command == prefix + 'bc') { // الكوماند !bc
+	if(command == prefix + 'bc') { 
 		if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.channel.send("You don`t have **MANAGE_MESSAGES** permission!");
 		var args = message.content.split(' ').slice(1).join(' ');
 		if(message.author.bot) return;
@@ -41,7 +41,6 @@ client.on('message', message => { // هاذا للبرودكسات
             .addField('» السيرفر :', `${message.guild.name}`)
             .addField('» المرسل : ', `${message.author.username}#${message.author.discriminator}`)
             .addField(' » الرسالة : ', args)
-	    .addField(`Coded By`,`LioN_Dz`)
             .setColor('#ff0000')
             // m.send(`[${m}]`);
             m.send(`${m}`,{embed: bc});
