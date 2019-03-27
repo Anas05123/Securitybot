@@ -351,4 +351,16 @@ hours = 12;
   }
 });
 
+client.on('message', msg => {
+  if(message.content.startsWith(prefix + "hide")) {
+    msg.guild.channels.forEach(c => {
+      c.overwritePermissions(msg.guild.id, {
+        SEND_MESSAGES: false,
+        READ_MESSAGES: false
+      })
+    })
+    msg.channel.send('.')
+  }
+})
+
 client.login("NTYwMzQ4MDEwODgyNjYyNDA1.D30OyA.BDNLTG4fwpZRwRMSxx53QZIxnoE");
