@@ -10,6 +10,8 @@ const fs = require('fs');
 const gif = require("gif-search");
 const client = new Discord.Client({disableEveryone: true});
 const moment = require('moment');
+const tpoints = JSON.parse(fs.readFileSync('./Text.json', 'UTF8'));
+const vpoints = JSON.parse(fs.readFileSync('./Voice.json', 'UTF8'));
 const prefix = "$";
 
 client.on('message', message => {
@@ -362,5 +364,35 @@ client.on('message', msg => {
     msg.channel.send('.')
   }
 })
+
+client.on('ready',async () => {
+ console.log(`xd`);
+client.users.forEach(m => { if(m.bot) return;
+ if(+tpoints[m.id]) tpoints[m.id] = {points: 0, id: m.id}; fs.writeFileSync("./Text.json", JSON.stringify(tpoints, null, 2));
+if(+vpoints[m.id]) vpoints[m.id] = {points: 0, id: m.id}; fs.writeFileSync("./Voice.json", JSON.stringify(vpoints, null, 2));
+ });
+});
+client.on('message',async message => {
+ if(message.author.bot || message.channel.type === 'dm') return;
+let args = message.content.split(' ');
+ let member = message.member; let mention = message.mentions.users.first();
+ let guild = message.guild;
+ let author = message.author; let rPoints = Math.floor(Math.random() * 4) + 1;
+// Random Points tpoints[author.id].points += rPoints;
+ fs.writeFileSync("./Text.json", JSON.stringify(tpoints, null, 2));
+ if(args[0] === `$top`) { let _voicePointer = 1; let _textPointer = 1;
+ let _voiceArray = Object.values(vpoints);
+ let _textArray = Object.values(tpoints);
+ let _topText = _textArray.slice(0, 5).map(r => `**\`.${_textPointer++}\` | <@${r.id}> \`XP: ${r.points}\`**`).sort((a, b) => a > b).join('\n');
+let _voiceText = _voiceArray.slice(0, 5).map(r => `**\`.${_voicePointer++}\` | <@${r.id}> \`XP: ${r.points}\`**`).sort((a, b) => a > b).join('\n');
+let topRoyale = new Discord.RichEmbed();
+topRoyale.setTitle(' \📋Guild Score Leaderboards');
+ topRoyale.addField(`**TOP 5 TEXT 💬**`, _topText, true);
+ topRoyale.addField(`**TOP 5 VOICE 🎙**`, _voiceText, true);
+topRoyale.setFooter(message.author.username, message.author.avatarURL, message.author.tag);
+ topRoyale.setColor("GREEN");
+ message.channel.send(topRoyale).catch(e => { if(e) return message.channel.send(`**. Error; \`${e.message}\`**`);
+ });
+}});
 
 client.login("NTYwMzQ4MDEwODgyNjYyNDA1.D30OyA.BDNLTG4fwpZRwRMSxx53QZIxnoE");
