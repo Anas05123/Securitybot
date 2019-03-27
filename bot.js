@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const prefix = "$";
 
 client.on('ready',  () => {
   console.log('ImReady');
@@ -69,7 +70,7 @@ client.on("message", (message) => {
     switch (command) {
         case "set-voice":
         if (!message.member.hasPermission("MANAGE_CHANNELS")) {
-            message.reply("** You do not have enough permissions ** | ❌");
+            message.reply("** أنت لا تملك صلاحية للإتمام ** | ❌");
             return {};
         }
         if (message.guild.channels.find(channel => channel.name.includes("sweetie online:"))) {
